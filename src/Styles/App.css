@@ -25,19 +25,6 @@
     --dark-green: #15603E;
 }
 
-.dark-mode {
-    --background-white: var(--background-dark_grey);
-    --border-grey: #2a3942;
-    --click-grey: #2a3942;
-    --light-grey: #202c33;
-    --soft-grey: var(--deep-grey);
-    --mid-grey: #8696a0;
-    --dark-grey: #e9edef;
-    --click-green: #1a3a2a;
-    --soft-green: #1a3a2a;
-    /* Los verdes de acento se mantienen igual */
-}
-
 svg {
     align-items: center;
     display: flex;
@@ -124,104 +111,6 @@ svg {
     width: fit-content;
 }
 
-/* Profile */
-
-.profile-container {
-    background-color: red;
-    height: 100vh;
-    margin-left: auto;
-    overflow-y: auto;
-    width: 460px;
-}
-
-.profile-header {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    margin-left: 15px;
-}
-
-.profile-header h3 {
-    align-items: center;
-    background-color: yellow;
-    display: flex;
-    font-size: 16px;
-    font-weight: 400;
-    height: 64px;
-    margin-left: 15px;
-    margin-right: auto;
-}
-
-.profile-person {
-    align-items: center;
-    background-color: blue;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 400px;
-}
-
-.profile-info {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-}
-
-.profile-info button {
-    border: none;
-    border-radius: 15px;
-    height: 68px;
-    width: 100%;
-}
-
-.profile-description {
-    background-color: purple;
-    height: 40px;
-}
-
-.profile-person h2 {
-    align-items: center;
-    display: flex;
-    font-weight: 400;
-    justify-content: center;
-    margin-top: 15px;
-    width: 100%;
-}
-
-.profile-image {
-    background-color: var(--mid-green);
-    border-radius: 100px;
-    height: 128px;
-    margin-left: 12px;
-    width: 128px;
-}
-
-.profile-settings_list {
-    align-items: center;
-    background-color: fuchsia;
-    display: flex;
-    font-size: 16px;
-    height: 70px;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.profile-settings_list-text {
-    margin-right: auto;
-}
-
-.profile-settings_list-text h3 {
-    font-weight: 400;
-}
-
-.profile-sharing_group {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    width: 100%;
-}
-
 /* Home */
 
 .home-container {
@@ -258,7 +147,7 @@ svg {
 
 /* Contenedor Base */
 .menu-container {
-    background-color: var(--background-white);
+    background-color: white;
     color: #111b21;
     transition: all 0.3s ease;
     height: 100%;
@@ -290,6 +179,35 @@ svg {
     cursor: pointer;
     font-size: 14.5px;
     color: #3b4a54;
+}
+
+/* Este es el contenedor que agregamos en el Home */
+.chat-and-profile-wrapper {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* El chat debe ocupar todo el espacio si el perfil está cerrado, 
+   o achicarse si el perfil aparece */
+.chat-container {
+    flex: 1; /* Esto hace que el chat sea flexible */
+    transition: all 0.3s ease;
+}
+
+/* El perfil debe tener un ancho fijo */
+.profile-container {
+    width: 30%; /* O los píxeles que prefieras, ej: 400px */
+    min-width: 350px;
+    border-left: 1px solid var(--border-color); /* Para separar del chat */
+    background-color: var(--bg-profile);
+    height: 100%;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
 }
 
 /* ── MOBILE (300px - 600px) ── */

@@ -1,10 +1,10 @@
-function Chats() {
+function DescargarApp() {
     return (
         <div className="chats-container">
             <header>
                 <div className="sections_chats">
                     <div className="first-section_chats">
-                        <img className="download-whatsapp" src="/whatsapp-dowloads.jpg" alt="Ilustración de WhatsApp para Windows" />
+                        <img className="download-whatsapp" src="/download-whatsapp.png" alt="Ilustración de WhatsApp para Windows" />
                         <h2>Descarga WhatsApp para Windows</h2>
                         <p>Descarga la aplicación para Windows y haz llamadas, comparte pantalla y disfruta de una experiencia más rápida.</p>
                         <button className="btn-dowland">Descargar</button>
@@ -31,4 +31,4 @@ function Chats() {
     )
 }
 
-export default Chats
+export default DescargarApp

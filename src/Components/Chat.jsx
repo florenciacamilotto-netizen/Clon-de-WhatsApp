@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EmojiPicker from 'emoji-picker-react';
+import Profile from './Profile';
 
 const AddEmoji = ({ onEmojiSelect }) => {
     const [showPicker, setShowPicker] = useState(false);
-
     return (
         <div className="emoji-wrapper" style={{ position: 'relative' }}>
             <button
@@ -30,12 +30,52 @@ const AddEmoji = ({ onEmojiSelect }) => {
     );
 };
 
-function Chat({ onVolver }) {
+function Chat({ chat, onVolver }) {
     const [nuevoMensaje, setNuevoMensaje] = useState("");
-    const [listaMensajes, setListaMensajes] = useState([
-        { id: 1, texto: "Hola ¿cómo estás?", hora: "15:25", tipo: "received" },
-        { id: 2, texto: "Todo bien ¿y vos?", hora: "15:30", tipo: "sent" }
-    ]);
+    const [listaMensajes, setListaMensajes] = useState([]);
+    const [mostrarPerfil, setMostrarPerfil] = useState(false);
+
+    const togglePerfil = () => setMostrarPerfil(prev => !prev);
+    const cerrarPerfil = () => setMostrarPerfil(false);
+
+    const mensajesPorChat = {
+        1: [
+            { id: 1, texto: "Che, ¿al final pudiste descargar el programa ese?", hora: "08:12", tipo: "received" },
+            { id: 2, texto: "Todavía no, me va re lento.", hora: "08:15", tipo: "sent" },
+            { id: 3, texto: "Uy, bajá algo más liviano entonces.", hora: "08:18", tipo: "received" }
+        ],
+        2: [
+            { id: 1, texto: "Dale, salgo en 5!", hora: "10:45", tipo: "sent" },
+            { id: 2, texto: "Avisame cuando estés por salir así te espero abajo.", hora: "10:47", tipo: "received" },
+            { id: 3, texto: "Apurate que hace frío jaja", hora: "10:49", tipo: "received" },
+            { id: 4, texto: "Ya casi llego", hora: "10:50", tipo: "received" },
+            { id: 5, texto: "Estoy en la puerta, te espero!", hora: "10:51", tipo: "received" }
+        ],
+        3: [
+            { id: 1, texto: "No sabés el frío que hace acá, traete una campera.", hora: "13:20", tipo: "received" },
+            { id: 2, texto: "Menos mal que me avisaste!", hora: "13:25", tipo: "sent" },
+            { id: 3, texto: "En serio, está helado hoy", hora: "13:26", tipo: "received" },
+            { id: 4, texto: "Capaz llueve también, fijate el clima", hora: "13:27", tipo: "received" }
+        ],
+        4: [
+            { id: 1, texto: "Te mandé una foto de lo que compramos, ¿te gusta?", hora: "16:10", tipo: "received" },
+            { id: 2, texto: "¡Está buenísima!", hora: "16:15", tipo: "sent" }
+        ],
+        5: [
+            { id: 1, texto: "¡Feliz cumple loco! Espero que la pases de diez.", hora: "19:55", tipo: "received" },
+            { id: 2, texto: "¡Gracias genio!", hora: "20:00", tipo: "sent" },
+            { id: 3, texto: "¿Cómo la estás pasando?", hora: "20:05", tipo: "received" },
+            { id: 4, texto: "Re bien, con la familia!", hora: "20:08", tipo: "sent" },
+            { id: 5, texto: "Qué bueno! Saludos a todos 🎉", hora: "20:10", tipo: "received" }
+        ]
+    };
+
+    useEffect(() => {
+        if (chat) {
+            setListaMensajes(mensajesPorChat[chat.id] || []);
+            setMostrarPerfil(false);
+        }
+    }, [chat]);
 
     const handleEmojiSelect = (emoji) => {
         setNuevoMensaje(prev => prev + emoji);
@@ -58,88 +98,104 @@ function Chat({ onVolver }) {
     };
 
     return (
-        <div className="chat-container">
-            <div className="chat-header">
+        <div style={{ display: 'flex', width: '100%', height: '100%' }}>
 
-                {/* Botón volver — solo visible en móvil/tablet via CSS */}
-                <button className="btn-volver" onClick={onVolver}>
-                    <svg viewBox="0 0 24 24" height="24" width="24" fill="none">
-                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
-                    </svg>
-                </button>
-
-                <div className="chat-header_image"></div>
-                <div className="chat-header_info">
-                    <h4>UTN CEL-Programación Web</h4>
-                    <span>haz click aquí para ver la información del contacto</span>
-                </div>
-                <button className="btn-videocall">
-                    <div>
-                        <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>ic-videocam</title><path d="M4 20C3.45 20 2.97917 19.8042 2.5875 19.4125C2.19583 19.0208 2 18.55 2 18V6C2 5.45 2.19583 4.97917 2.5875 4.5875C2.97917 4.19583 3.45 4 4 4H16C16.55 4 17.0208 4.19583 17.4125 4.5875C17.8042 4.97917 18 5.45 18 6V10.5L21.15 7.35C21.3167 7.18333 21.5 7.14167 21.7 7.225C21.9 7.30833 22 7.46667 22 7.7V16.3C22 16.5333 21.9 16.6917 21.7 16.775C21.5 16.8583 21.3167 16.8167 21.15 16.65L18 13.5V18C18 18.55 17.8042 19.0208 17.4125 19.4125C17.0208 19.8042 16.55 20 16 20H4ZM4 18H16V6H4V18Z" fill="currentColor"></path></svg>
-                    </div>
-                    <div><span>Llamar</span></div>
-                    <div>
-                        <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>ic-arrow-drop-down</title><path d="M11.475 14.475L7.85001 10.85C7.80001 10.8 7.76251 10.7458 7.73751 10.6875C7.71251 10.6292 7.70001 10.5667 7.70001 10.5C7.70001 10.3667 7.74585 10.25 7.83751 10.15C7.92918 10.05 8.05001 10 8.20001 10H15.8C15.95 10 16.0708 10.05 16.1625 10.15C16.2542 10.25 16.3 10.3667 16.3 10.5C16.3 10.5333 16.25 10.65 16.15 10.85L12.525 14.475C12.4417 14.5583 12.3583 14.6167 12.275 14.65C12.1917 14.6833 12.1 14.7 12 14.7C11.9 14.7 11.8083 14.6833 11.725 14.65C11.6417 14.6167 11.5583 14.5583 11.475 14.475Z" fill="currentColor"></path></svg>
-                    </div>
-                </button>
-                <div className="header-icons">
-                    <button>
-                        <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>ic-search</title><path d="M9.5 16C7.68333 16 6.14583 15.3708 4.8875 14.1125C3.62917 12.8542 3 11.3167 3 9.5C3 7.68333 3.62917 6.14583 4.8875 4.8875C6.14583 3.62917 7.68333 3 9.5 3C11.3167 3 12.8542 3.62917 14.1125 4.8875C15.3708 6.14583 16 7.68333 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L20.3 18.9C20.4833 19.0833 20.575 19.3167 20.575 19.6C20.575 19.8833 20.4833 20.1167 20.3 20.3C20.1167 20.4833 19.8833 20.575 19.6 20.575C19.3167 20.575 19.0833 20.4833 18.9 20.3L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16ZM9.5 14C10.75 14 11.8125 13.5625 12.6875 12.6875C13.5625 11.8125 14 10.75 14 9.5C14 8.25 13.5625 7.1875 12.6875 6.3125C11.8125 5.4375 10.75 5 9.5 5C8.25 5 7.1875 5.4375 6.3125 6.3125C5.4375 7.1875 5 8.25 5 9.5C5 10.75 5.4375 11.8125 6.3125 12.6875C7.1875 13.5625 8.25 14 9.5 14Z" fill="currentColor"></path></svg>
+            <div className="chat-container" style={{ flex: 1, minWidth: 0 }}>
+                <div className="chat-header">
+                    <button className="btn-volver" onClick={onVolver}>
+                        <svg viewBox="0 0 24 24" height="24" width="24" fill="none">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+                        </svg>
                     </button>
-                    <button>
-                        <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>ic-more-vert</title><path d="M12 20C11.45 20 10.9792 19.8042 10.5875 19.4125C10.1958 19.0208 10 18.55 10 18C10 17.45 10.1958 16.9792 10.5875 16.5875C10.9792 16.1958 11.45 16 12 16C12.55 16 13.0208 16.1958 13.4125 16.5875C13.8042 16.9792 14 17.45 14 18C14 18.55 13.8042 19.0208 13.4125 19.4125C13.0208 19.8042 12.55 20 12 20ZM12 14C11.45 14 10.9792 13.8042 10.5875 13.4125C10.1958 13.0208 10 12.55 10 12C10 11.45 10.1958 10.9792 10.5875 10.5875C10.9792 10.1958 11.45 10 12 10C12.55 10 13.0208 10.1958 13.4125 10.5875C13.8042 10.9792 14 11.45 14 12C14 12.55 13.8042 13.0208 13.4125 13.4125C13.0208 13.8042 12.55 14 12 14ZM12 8C11.45 8 10.9792 7.80417 10.5875 7.4125C10.1958 7.02083 10 6.55 10 6C10 5.45 10.1958 4.97917 10.5875 4.5875C10.9792 4.19583 11.45 4 12 4C12.55 4 13.0208 4.19583 13.4125 4.5875C13.8042 4.97917 14 5.45 14 6C14 6.55 13.8042 7.02083 13.4125 7.4125C13.0208 7.80417 12.55 8 12 8Z" fill="currentColor"></path></svg>
-                    </button>
-                </div>
-            </div>
 
-            <div className="chat-data">
-                <span className="chat-day">Hoy</span>
-                <div className="chat-disclaimer">
-                    <div className="chat-disclaimer_contact">
-                        <span className="chat-disclaimer_icon">
-                            <svg viewBox="0 0 10 12" height="12" width="10" preserveAspectRatio="xMidYMid meet" version="1.1"><title>lock-small</title><path d="M5.00847986,1.6 C6.38255462,1.6 7.50937014,2.67435859 7.5940156,4.02703389 L7.59911976,4.1906399 L7.599,5.462 L7.75719976,5.46214385 C8.34167974,5.46214385 8.81591972,5.94158383 8.81591972,6.53126381 L8.81591972,9.8834238 C8.81591972,10.4731038 8.34167974,10.9525438 7.75719976,10.9525438 L2.25767996,10.9525438 C1.67527998,10.9525438 1.2,10.4731038 1.2,9.8834238 L1.2,6.53126381 C1.2,5.94158383 1.67423998,5.46214385 2.25767996,5.46214385 L2.416,5.462 L2.41679995,4.1906399 C2.41679995,2.81636129 3.49135449,1.68973395 4.84478101,1.60510326 L5.00847986,1.6 Z M5.00847986,2.84799995 C4.31163824,2.84799995 3.73624912,3.38200845 3.6709675,4.06160439 L3.6647999,4.1906399 L3.663,5.462 L6.35,5.462 L6.35111981,4.1906399 C6.35111981,3.53817142 5.88169076,2.99180999 5.26310845,2.87228506 L5.13749818,2.85416626 L5.00847986,2.84799995 Z" fill="currentColor"></path></svg>
-                        </span>
-                        <span>Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Haz click para obtener más información.</span>
+                    <div
+                        className="chat-header_image"
+                        onClick={togglePerfil}
+                        style={{ cursor: 'pointer' }}
+                    ></div>
+
+                    <div
+                        className="chat-header_info"
+                        onClick={togglePerfil}
+                        style={{ cursor: 'pointer' }}
+                    >
+                        <h4>{chat?.nombre || "Julieta Alarcón"}</h4>
+                        <span>haz click aquí para ver la información del contacto</span>
                     </div>
-                </div>
-                <div className="chat-messages">
-                    {listaMensajes.map((msg) => (
-                        <div key={msg.id} className={`messages messages-${msg.tipo}`}>
-                            <p>{msg.texto}</p>
-                            {msg.tipo === "sent" ? (
-                                <div className="message-check">
-                                    <span className="message-time">{msg.hora} </span>
-                                    <span aria-hidden="false" aria-label=" Entregado "><svg viewBox="0 0 16 11" height="11" width="16" preserveAspectRatio="xMidYMid meet" fill="none"><title>msg-dblcheck</title><path d="M11.0714 0.652832C10.991 0.585124 10.8894 0.55127 10.7667 0.55127C10.6186 0.55127 10.4916 0.610514 10.3858 0.729004L4.19688 8.36523L1.79112 6.09277C1.7488 6.04622 1.69802 6.01025 1.63877 5.98486C1.57953 5.95947 1.51817 5.94678 1.45469 5.94678C1.32351 5.94678 1.20925 5.99544 1.11192 6.09277L0.800883 6.40381C0.707784 6.49268 0.661235 6.60482 0.661235 6.74023C0.661235 6.87565 0.707784 6.98991 0.800883 7.08301L3.79698 10.0791C3.94509 10.2145 4.11224 10.2822 4.29844 10.2822C4.40424 10.2822 4.5058 10.259 4.60313 10.2124C4.70046 10.1659 4.78086 10.1003 4.84434 10.0156L11.4903 1.59863C11.5623 1.5013 11.5982 1.40186 11.5982 1.30029C11.5982 1.14372 11.5348 1.01888 11.4078 0.925781L11.0714 0.652832ZM8.6212 8.32715C8.43077 8.20866 8.2488 8.09017 8.0753 7.97168C7.99489 7.89128 7.8891 7.85107 7.75791 7.85107C7.6098 7.85107 7.4892 7.90397 7.3961 8.00977L7.10411 8.33984C7.01947 8.43717 6.97715 8.54508 6.97715 8.66357C6.97715 8.79476 7.0237 8.90902 7.1168 9.00635L8.1959 10.0791C8.33132 10.2145 8.49636 10.2822 8.69102 10.2822C8.79681 10.2822 8.89838 10.259 8.99571 10.2124C9.09304 10.1659 9.17556 10.1003 9.24327 10.0156L15.8639 1.62402C15.9358 1.53939 15.9718 1.43994 15.9718 1.32568C15.9718 1.1818 15.9125 1.05697 15.794 0.951172L15.4386 0.678223C15.3582 0.610514 15.2587 0.57666 15.1402 0.57666C14.9964 0.57666 14.8715 0.635905 14.7657 0.754395L8.6212 8.32715Z" fill="currentColor"></path></svg></span>
-                                </div>
-                            ) : (
-                                <span className="message-time">{msg.hora}</span>
-                            )}
+
+                    <button className="btn-videocall">
+                        <div>
+                            <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>ic-videocam</title><path d="M4 20C3.45 20 2.97917 19.8042 2.5875 19.4125C2.19583 19.0208 2 18.55 2 18V6C2 5.45 2.19583 4.97917 2.5875 4.5875C2.97917 4.19583 3.45 4 4 4H16C16.55 4 17.0208 4.19583 17.4125 4.5875C17.8042 4.97917 18 5.45 18 6V10.5L21.15 7.35C21.3167 7.18333 21.5 7.14167 21.7 7.225C21.9 7.30833 22 7.46667 22 7.7V16.3C22 16.5333 21.9 16.6917 21.7 16.775C21.5 16.8583 21.3167 16.8167 21.15 16.65L18 13.5V18C18 18.55 17.8042 19.0208 17.4125 19.4125C17.0208 19.8042 16.55 20 16 20H4ZM4 18H16V6H4V18Z" fill="currentColor"></path></svg>
                         </div>
-                    ))}
+                        <div><span>Llamar</span></div>
+                        <div>
+                            <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>ic-arrow-drop-down</title><path d="M11.475 14.475L7.85001 10.85C7.80001 10.8 7.76251 10.7458 7.73751 10.6875C7.71251 10.6292 7.70001 10.5667 7.70001 10.5C7.70001 10.3667 7.74585 10.25 7.83751 10.15C7.92918 10.05 8.05001 10 8.20001 10H15.8C15.95 10 16.0708 10.05 16.1625 10.15C16.2542 10.25 16.3 10.3667 16.3 10.5C16.3 10.5333 16.25 10.65 16.15 10.85L12.525 14.475C12.4417 14.5583 12.3583 14.6167 12.275 14.65C12.1917 14.6833 12.1 14.7 12 14.7C11.9 14.7 11.8083 14.6833 11.725 14.65C11.6417 14.6167 11.5583 14.5583 11.475 14.475Z" fill="currentColor"></path></svg>
+                        </div>
+                    </button>
+                    <div className="header-icons">
+                        <button>
+                            <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>ic-search</title><path d="M9.5 16C7.68333 16 6.14583 15.3708 4.8875 14.1125C3.62917 12.8542 3 11.3167 3 9.5C3 7.68333 3.62917 6.14583 4.8875 4.8875C6.14583 3.62917 7.68333 3 9.5 3C11.3167 3 12.8542 3.62917 14.1125 4.8875C15.3708 6.14583 16 7.68333 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L20.3 18.9C20.4833 19.0833 20.575 19.3167 20.575 19.6C20.575 19.8833 20.4833 20.1167 20.3 20.3C20.1167 20.4833 19.8833 20.575 19.6 20.575C19.3167 20.575 19.0833 20.4833 18.9 20.3L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16ZM9.5 14C10.75 14 11.8125 13.5625 12.6875 12.6875C13.5625 11.8125 14 10.75 14 9.5C14 8.25 13.5625 7.1875 12.6875 6.3125C11.8125 5.4375 10.75 5 9.5 5C8.25 5 7.1875 5.4375 6.3125 6.3125C5.4375 7.1875 5 8.25 5 9.5C5 10.75 5.4375 11.8125 6.3125 12.6875C7.1875 13.5625 8.25 14 9.5 14Z" fill="currentColor"></path></svg>
+                        </button>
+                        <button>
+                            <span aria-hidden="true" className="xxk0z11 xvy4d1p"><svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>ic-more-vert</title><path d="M12 20C11.45 20 10.9792 19.8042 10.5875 19.4125C10.1958 19.0208 10 18.55 10 18C10 17.45 10.1958 16.9792 10.5875 16.5875C10.9792 16.1958 11.45 16 12 16C12.55 16 13.0208 16.1958 13.4125 16.5875C13.8042 16.9792 14 17.45 14 18C14 18.55 13.8042 19.0208 13.4125 19.4125C13.0208 19.8042 12.55 20 12 20ZM12 14C11.45 14 10.9792 13.8042 10.5875 13.4125C10.1958 13.0208 10 12.55 10 12C10 11.45 10.1958 10.9792 10.5875 10.5875C10.9792 10.1958 11.45 10 12 10C12.55 10 13.0208 10.1958 13.4125 10.5875C13.8042 10.9792 14 11.45 14 12C14 12.55 13.8042 13.0208 13.4125 13.4125C13.0208 13.8042 12.55 14 12 14ZM12 8C11.45 8 10.9792 7.80417 10.5875 7.4125C10.1958 7.02083 10 6.55 10 6C10 5.45 10.1958 4.97917 10.5875 4.5875C10.9792 4.19583 11.45 4 12 4C12.55 4 13.0208 4.19583 13.4125 4.5875C13.8042 4.97917 14 5.45 14 6C14 6.55 13.8042 7.02083 13.4125 7.4125C13.0208 7.80417 12.55 8 12 8Z" fill="currentColor"></path></svg></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="chat-data">
+                    <span className="chat-day">Hoy</span>
+                    <div className="chat-disclaimer">
+                        <div className="chat-disclaimer_contact">
+                            <span className="chat-disclaimer_icon">
+                                <svg viewBox="0 0 10 12" height="12" width="10" preserveAspectRatio="xMidYMid meet" version="1.1"><title>lock-small</title><path d="M5.00847986,1.6 C6.38255462,1.6 7.50937014,2.67435859 7.5940156,4.02703389 L7.59911976,4.1906399 L7.599,5.462 L7.75719976,5.46214385 C8.34167974,5.46214385 8.81591972,5.94158383 8.81591972,6.53126381 L8.81591972,9.8834238 C8.81591972,10.4731038 8.34167974,10.9525438 7.75719976,10.9525438 L2.25767996,10.9525438 C1.67527998,10.9525438 1.2,10.4731038 1.2,9.8834238 L1.2,6.53126381 C1.2,5.94158383 1.67423998,5.46214385 2.25767996,5.46214385 L2.416,5.462 L2.41679995,4.1906399 C2.41679995,2.81636129 3.49135449,1.68973395 4.84478101,1.60510326 L5.00847986,1.6 Z M5.00847986,2.84799995 C4.31163824,2.84799995 3.73624912,3.38200845 3.6709675,4.06160439 L3.6647999,4.1906399 L3.663,5.462 L6.35,5.462 L6.35111981,4.1906399 C6.35111981,3.53817142 5.88169076,2.99180999 5.26310845,2.87228506 L5.13749818,2.85416626 L5.00847986,2.84799995 Z" fill="currentColor"></path></svg>
+                            </span>
+                            <span>Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Haz click para obtener más información.</span>
+                        </div>
+                    </div>
+                    <div className="chat-messages">
+                        {listaMensajes.map((msg) => (
+                            <div key={msg.id} className={`messages messages-${msg.tipo}`}>
+                                <p>{msg.texto}</p>
+                                {msg.tipo === "sent" ? (
+                                    <div className="message-check">
+                                        <span className="message-time">{msg.hora} </span>
+                                        <span aria-hidden="false" aria-label=" Entregado "><svg viewBox="0 0 16 11" height="11" width="16" preserveAspectRatio="xMidYMid meet" fill="none"><title>msg-dblcheck</title><path d="M11.0714 0.652832C10.991 0.585124 10.8894 0.55127 10.7667 0.55127C10.6186 0.55127 10.4916 0.610514 10.3858 0.729004L4.19688 8.36523L1.79112 6.09277C1.7488 6.04622 1.69802 6.01025 1.63877 5.98486C1.57953 5.95947 1.51817 5.94678 1.45469 5.94678C1.32351 5.94678 1.20925 5.99544 1.11192 6.09277L0.800883 6.40381C0.707784 6.49268 0.661235 6.60482 0.661235 6.74023C0.661235 6.87565 0.707784 6.98991 0.800883 7.08301L3.79698 10.0791C3.94509 10.2145 4.11224 10.2822 4.29844 10.2822C4.40424 10.2822 4.5058 10.259 4.60313 10.2124C4.70046 10.1659 4.78086 10.1003 4.84434 10.0156L11.4903 1.59863C11.5623 1.5013 11.5982 1.40186 11.5982 1.30029C11.5982 1.14372 11.5348 1.01888 11.4078 0.925781L11.0714 0.652832ZM8.6212 8.32715C8.43077 8.20866 8.2488 8.09017 8.0753 7.97168C7.99489 7.89128 7.8891 7.85107 7.75791 7.85107C7.6098 7.85107 7.4892 7.90397 7.3961 8.00977L7.10411 8.33984C7.01947 8.43717 6.97715 8.54508 6.97715 8.66357C6.97715 8.79476 7.0237 8.90902 7.1168 9.00635L8.1959 10.0791C8.33132 10.2145 8.49636 10.2822 8.69102 10.2822C8.79681 10.2822 8.89838 10.259 8.99571 10.2124C9.09304 10.1659 9.17556 10.1003 9.24327 10.0156L15.8639 1.62402C15.9358 1.53939 15.9718 1.43994 15.9718 1.32568C15.9718 1.1818 15.9125 1.05697 15.794 0.951172L15.4386 0.678223C15.3582 0.610514 15.2587 0.57666 15.1402 0.57666C14.9964 0.57666 14.8715 0.635905 14.7657 0.754395L8.6212 8.32715Z" fill="currentColor"></path></svg></span>
+                                    </div>
+                                ) : (
+                                    <span className="message-time">{msg.hora}</span>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="chat-input">
+                    <div className="input-wrapper">
+                        <div className="btn-attach">
+                            <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>plus-rounded</title><path d="M11 13H5.5C4.94772 13 4.5 12.5523 4.5 12C4.5 11.4477 4.94772 11 5.5 11H11V5.5C11 4.94772 11.4477 4.5 12 4.5C12.5523 4.5 13 4.94772 13 5.5V11H18.5C19.0523 11 19.5 11.4477 19.5 12C19.5 12.5523 19.0523 13 18.5 13H13V18.5C13 19.0523 12.5523 19.5 12 19.5C11.4477 19.5 11 19.0523 11 18.5V13Z" fill="currentColor"></path></svg>
+                        </div>
+                        <div className="btn-emoji">
+                            <AddEmoji onEmojiSelect={handleEmojiSelect} />
+                        </div>
+                        <input
+                            className="search-container_chat"
+                            type="text"
+                            placeholder="Escribe un mensaje"
+                            value={nuevoMensaje}
+                            onChange={(e) => setNuevoMensaje(e.target.value)}
+                            onKeyDown={manejarEnter}
+                        />
+                        <button className="btn-send" onClick={enviarMensaje} style={{ cursor: 'pointer' }}>
+                            <span><div data-tab="11" aria-label="Enviar" aria-disabled="false" tabIndex="0" type="button"><div><div><div><span aria-hidden="true"><svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>wds-ic-send-filled</title><path d="M5.4 19.425C5.06667 19.5583 4.75 19.5291 4.45 19.3375C4.15 19.1458 4 18.8666 4 18.5V14L12 12L4 9.99997V5.49997C4 5.1333 4.15 4.85414 4.45 4.66247C4.75 4.4708 5.06667 4.44164 5.4 4.57497L20.8 11.075C21.2167 11.2583 21.425 11.5666 21.425 12C21.425 12.4333 21.2167 12.7416 20.8 12.925L5.4 19.425Z" fill="currentColor"></path></svg></span></div></div></div></div></span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div className="chat-input">
-                <div className="input-wrapper">
-                    <div className="btn-attach">
-                        <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>plus-rounded</title><path d="M11 13H5.5C4.94772 13 4.5 12.5523 4.5 12C4.5 11.4477 4.94772 11 5.5 11H11V5.5C11 4.94772 11.4477 4.5 12 4.5C12.5523 4.5 13 4.94772 13 5.5V11H18.5C19.0523 11 19.5 11.4477 19.5 12C19.5 12.5523 19.0523 13 18.5 13H13V18.5C13 19.0523 12.5523 19.5 12 19.5C11.4477 19.5 11 19.0523 11 18.5V13Z" fill="currentColor"></path></svg>
-                    </div>
-                    <div className="btn-emoji">
-                        <AddEmoji onEmojiSelect={handleEmojiSelect} />
-                    </div>
-                    <input
-                        className="search-container_chat"
-                        type="text"
-                        placeholder="Escribe un mensaje"
-                        value={nuevoMensaje}
-                        onChange={(e) => setNuevoMensaje(e.target.value)}
-                        onKeyDown={manejarEnter}
-                    />
-                    <button className="btn-send" onClick={enviarMensaje} style={{ cursor: 'pointer' }}>
-                        <span><div data-tab="11" aria-label="Enviar" aria-disabled="false" tabIndex="0" type="button"><div><div><div><span aria-hidden="true"><svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>wds-ic-send-filled</title><path d="M5.4 19.425C5.06667 19.5583 4.75 19.5291 4.45 19.3375C4.15 19.1458 4 18.8666 4 18.5V14L12 12L4 9.99997V5.49997C4 5.1333 4.15 4.85414 4.45 4.66247C4.75 4.4708 5.06667 4.44164 5.4 4.57497L20.8 11.075C21.2167 11.2583 21.425 11.5666 21.425 12C21.425 12.4333 21.2167 12.7416 20.8 12.925L5.4 19.425Z" fill="currentColor"></path></svg></span></div></div></div></div></span>
-                    </button>
-                </div>
-            </div>
+            {mostrarPerfil && (
+                <Profile onCerrar={cerrarPerfil} chat={chat} />
+            )}
+
         </div>
     );
 }

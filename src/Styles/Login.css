@@ -1,6 +1,6 @@
 .login-container {
     align-items: center;
-    background: beige;
+    background: #FCF3EA;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,13 +20,12 @@
 }
 
 .logo-container_login img {
-    margin-left: auto;
-    mix-blend-mode: multiply;
-    width: 150px;
+    margin-left: 18px;
+    width: 120px;
 }
 
 .login-form {
-    background-color: var(--background-white);
+    background-color: white;
     border: 1.1px solid black;
     border-radius: 30px;
     display: flex;
@@ -60,7 +59,7 @@
     border: none;
     border-radius: 30px;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 20px;
     padding: 15px 18px;
     width: fit-content;
 }

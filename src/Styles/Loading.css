@@ -43,8 +43,8 @@
             transparent);
     position: absolute;
 
-    -webkit-mask-image: url('/whatsapp-logo.png');
-    mask-image: url('/whatsapp-logo.png');
+    -webkit-mask-image: url('/whatsapp-logo.jpg');
+    mask-image: url('/whatsapp-logo.jpg');
     -webkit-mask-size: contain;
     mask-size: contain;
     -webkit-mask-repeat: no-repeat;

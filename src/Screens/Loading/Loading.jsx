@@ -17,7 +17,7 @@ function Loading() {
         <div className="loading-container">
             <div className="loading-first_section">
                 <div className="logo-wrapper">
-                    <img src="/whatsapp-logo.png" alt="Logo de WhatsApp" />
+                    <img src="/whatsapp-logo.jpg" alt="Logo de WhatsApp" />
                 </div>
                 <div className="loading-text">
                     <h3 className="loading-title">WhatsApp</h3>

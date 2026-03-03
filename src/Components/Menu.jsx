@@ -1,14 +1,59 @@
 import React, { useState } from 'react';
 
-function Menu({ onChatClick, darkMode, onToggleDarkMode }) {
+function Menu({ onChatClick, darkMode, onToggleDarkMode, esOculto }) {
     const [busqueda, setBusqueda] = useState("");
     const [menuAbierto, setMenuAbierto] = useState(false);
+    const [filtroActivo, setFiltroActivo] = useState("todos");
 
     const nombreChat = "UTN CEL - Programación Web";
     const mostrarChat = busqueda === "" || nombreChat.toLowerCase().startsWith(busqueda.toLowerCase());
 
+    const chats = [
+        {
+            id: 1,
+            nombre: "Julián Alarcón",
+            hora: "08:12",
+            mensaje: "Che, ¿al final pudiste descargar el programa ese?",
+            noLeidos: 1
+        },
+        {
+            id: 2,
+            nombre: "Paula Benítez",
+            hora: "10:45",
+            mensaje: "Avisame cuando estés por salir así te espero abajo.",
+            noLeidos: 5
+        },
+        {
+            id: 3,
+            nombre: "Gonzalo Martínez",
+            hora: "13:20",
+            mensaje: "No sabés el frío que hace acá, traete una campera.",
+            noLeidos: 2
+        },
+        {
+            id: 4,
+            nombre: "Victoria Rossi",
+            hora: "16:10",
+            mensaje: "Te mandé una foto de lo que compramos, ¿te gusta?",
+            noLeidos: 0
+        },
+        {
+            id: 5,
+            nombre: "Matías Fernández",
+            hora: "19:55",
+            mensaje: "¡Feliz cumple loco! Espero que la pases de diez.",
+            noLeidos: 0
+        }
+    ];
+
+    const chatsFiltrados = chats.filter(chat => {
+        const coincideBusqueda = busqueda === "" || chat.nombre.toLowerCase().startsWith(busqueda.toLowerCase());
+        if (filtroActivo === "noLeidos") return coincideBusqueda && chat.noLeidos > 0;
+        return coincideBusqueda;
+    });
+
     return (
-        <div className={`menu-container ${darkMode ? 'dark-mode' : ''}`}>
+        <div className={`menu-container ${darkMode ? 'dark-mode' : ''} ${esOculto ? 'menu-oculto' : ''}`}>
             <div className="menu-topbar">
                 <h1>WhatsApp</h1>
                 <div className="header-icons">
@@ -22,9 +67,7 @@ function Menu({ onChatClick, darkMode, onToggleDarkMode }) {
 
                     <div className="dropdown-wrapper">
                         <button onClick={() => setMenuAbierto(!menuAbierto)} className="icon-btn">
-
-                            <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>ic-more-vert</title><path d="M12 20C11.45 20 10.9792 19.8042 10.5875 19.4125C10.1958 19.0208 10 18.55 10 18C10 17.45 10.1958 16.9792 10.5875 16.5875C10.9792 16.1958 11.45 16 12 16C12.55 16 13.0208 16.1958 13.4125 16.5875C13.8042 16.9792 14 17.45 14 18C14 18.55 13.8042 19.0208 13.4125 19.4125C13.0208 19.8042 12.55 20 12 20ZM12 14C11.45 14 10.9792 13.8042 10.5875 13.4125C10.1958 13.0208 10 12.55 10 12C10 11.45 10.1958 10.9792 10.5875 10.5875C10.9792 10.1958 11.45 10 12 10C12.55 10 13.0208 10.1958 13.4125 10.5875C13.8042 10.9792 14 11.45 14 12C14 12.55 13.8042 13.0208 13.4125 13.4125C13.0208 13.8042 12.55 14 12 14ZM12 8C11.45 8 10.9792 7.80417 10.5875 7.4125C10.1958 7.02083 10 6.55 10 6C10 5.45 10.1958 4.97917 10.5875 4.5875C10.9792 4.19583 11.45 4 12 4C12.55 4 13.0208 4.19583 13.4125 4.5875C13.8042 4.97917 14 5.45 14 6C14 6.55 13.8042 7.02083 13.4125 7.4125C13.0208 7.80417 12.55 8 12 8Z" fill="currentColor"></path>
-                            </svg>
+                            <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" fill="none"><title>ic-more-vert</title><path d="M12 20C11.45 20 10.9792 19.8042 10.5875 19.4125C10.1958 19.0208 10 18.55 10 18C10 17.45 10.1958 16.9792 10.5875 16.5875C10.9792 16.1958 11.45 16 12 16C12.55 16 13.0208 16.1958 13.4125 16.5875C13.8042 16.9792 14 17.45 14 18C14 18.55 13.8042 19.0208 13.4125 19.4125C13.0208 19.8042 12.55 20 12 20ZM12 14C11.45 14 10.9792 13.8042 10.5875 13.4125C10.1958 13.0208 10 12.55 10 12C10 11.45 10.1958 10.9792 10.5875 10.5875C10.9792 10.1958 11.45 10 12 10C12.55 10 13.0208 10.1958 13.4125 10.5875C13.8042 10.9792 14 11.45 14 12C14 12.55 13.8042 13.0208 13.4125 13.4125C13.0208 13.8042 12.55 14 12 14ZM12 8C11.45 8 10.9792 7.80417 10.5875 7.4125C10.1958 7.02083 10 6.55 10 6C10 5.45 10.1958 4.97917 10.5875 4.5875C10.9792 4.19583 11.45 4 12 4C12.55 4 13.0208 4.19583 13.4125 4.5875C13.8042 4.97917 14 5.45 14 6C14 6.55 13.8042 7.02083 13.4125 7.4125C13.0208 7.80417 12.55 8 12 8Z" fill="currentColor"></path></svg>
                         </button>
 
                         {menuAbierto && (
@@ -54,25 +97,35 @@ function Menu({ onChatClick, darkMode, onToggleDarkMode }) {
             </div>
 
             <div className="filter-container_menu">
-                <button className="btn-filter">Todos</button>
-                <button className="btn-filter">No leídos</button>
-                <button className="btn-filter">Favoritos</button>
-                <button className="btn-filter">Grupos</button>
+                <button className={`btn-filter ${filtroActivo === "todos" ? "btn-filter--active" : ""}`} onClick={() => setFiltroActivo("todos")}>Todos</button>
+                <button className={`btn-filter ${filtroActivo === "noLeidos" ? "btn-filter--active" : ""}`} onClick={() => setFiltroActivo("noLeidos")}>No leídos</button>
+                <button className={`btn-filter ${filtroActivo === "favoritos" ? "btn-filter--active" : ""}`} onClick={() => setFiltroActivo("favoritos")}>Favoritos</button>
+                <button className={`btn-filter ${filtroActivo === "grupos" ? "btn-filter--active" : ""}`} onClick={() => setFiltroActivo("grupos")}>Grupos</button>
             </div>
 
-            {mostrarChat ? (
-                <div className="chat-panel_menu" onClick={onChatClick}>
-                    <div className="chat-panel_image"></div>
-                    <div className="chat-panel_text">
-                        <div className="chat-panel_superior">
-                            <h3>UTN CEL - Programación Web</h3>
-                            <h5>00:05</h5>
+            {filtroActivo === "favoritos" ? (
+                <div className="no-results">Añade chats a favoritos.</div>
+            ) : filtroActivo === "grupos" ? (
+                <div className="no-results">Añade chats a grupos.</div>
+            ) : chatsFiltrados.length > 0 ? (
+                <div className="chats-list">
+                    {chatsFiltrados.map(chat => (
+                        <div key={chat.id} className="chat-panel_menu" onClick={() => onChatClick(chat)}>
+                            <div className="chat-panel_image"></div>
+                            <div className="chat-panel_text">
+                                <div className="chat-panel_superior">
+                                    <h3>{chat.nombre}</h3>
+                                    <h5 style={{ color: chat.noLeidos > 0 ? "var(--mid-green)" : "", fontWeight: chat.noLeidos > 0 ? 800 : 400 }}>
+                                        {chat.hora}
+                                    </h5>
+                                </div>
+                                <div className="chat-panel_inferior">
+                                    <p>{chat.mensaje}</p>
+                                    {chat.noLeidos > 0 && <h5>{chat.noLeidos}</h5>}
+                                </div>
+                            </div>
                         </div>
-                        <div className="chat-panel_inferior">
-                            <p>Juan: El clásico no es un BUG es una característica</p>
-                            <h5>2</h5>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             ) : (
                 <div className="no-results">No se encontraron resultados.</div>

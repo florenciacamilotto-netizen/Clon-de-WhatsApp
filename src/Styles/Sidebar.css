@@ -12,10 +12,11 @@
 }
 
 .sidebar-icons {
+    align-items: center;
     display: flex;
     flex-direction: column;
     gap: 4px;
-    margin: 12px;
+    margin-top: 12px;
 }
 
 .dark-mode .sidebar-icons svg {
@@ -34,6 +35,17 @@
     justify-content: center;
     width: 40px;
 }
+
+.sidebar-icon_messages {
+    background-color: var(--click-grey);
+    border-radius: 50%;
+}
+
+.sidebar-icon_messages svg {
+    color: black;
+    fill: black;
+}
+
 .dark-mode .sidebar-icons button {
     background-color: var(--background-mid_grey);
     outline: none;
