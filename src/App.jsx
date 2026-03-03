@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './Styless/App.css'
+import './Styles/App.css'
 import './Styles/Chat.css'
 import './Styles/Loading.css'
 import './Styles/Login.css'
