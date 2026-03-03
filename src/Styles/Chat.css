@@ -369,7 +369,7 @@
 .btn-emoji,
 .btn-send {
     align-items: center;
-    background-color: var(--mid-green);
+    background-color: var(--background-white);
     border: none;
     border-radius: 50%;
     cursor: pointer;
