@@ -330,6 +330,7 @@
     background-color: white;
     box-shadow: 0 1px 0.5px #0000001F;
     margin-left: 61px;
+    margin-top: 3px;
 }
 
 .dark-mode .messages-received {
@@ -341,6 +342,11 @@
     background-color: var(--soft-green);
     box-shadow: 0 1px 0.5px #0000001F;
     margin-right: 61px;
+    margin-top: 3px;
+}
+
+.dark-mode .messages-sent{
+    background-color: var(--dark-green);
 }
 
 .message-time {

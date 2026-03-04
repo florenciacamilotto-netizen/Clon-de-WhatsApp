@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Sidebar from '../../Components/Sidebar'
 import Menu from '../../Components/Menu'
 import DescargarApp from '../../Components/DescargarApp'
@@ -6,52 +6,65 @@ import Chat from '../../Components/Chat'
 
 export default function Home({ darkMode, onToggleDarkMode }) {
 
-    // Estado para saber si hay un chat abierto
     const [chatAbierto, setChatAbierto] = useState(false);
     const [vistaActiva, setVistaActiva] = useState("menu");
-
-    // Estado para guardar el objeto completo del contacto seleccionado
     const [contactoActivo, setContactoActivo] = useState(null);
+    const [anchoVentana, setAnchoVentana] = useState(window.innerWidth);
 
-    // Abrir chat con el contacto recibido desde Menu
+    useEffect(() => {
+        const handleResize = () => setAnchoVentana(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const esMobile = anchoVentana < 600;
+    const esTabletChico = anchoVentana >= 600 && anchoVentana < 880;
+    const esTabletGrande = anchoVentana >= 880 && anchoVentana < 1200;
+    const esDesktop = anchoVentana >= 1200;
+
     const abrirChat = (contacto) => {
         setContactoActivo(contacto);
         setChatAbierto(true);
         setVistaActiva("chat");
     };
 
-    // Volver al menú principal (útil para vista móvil)
     const volverAlMenu = () => {
         setVistaActiva("menu");
         setChatAbierto(false);
         setContactoActivo(null);
     };
 
+    // En mobile y tablet chico, el menu se oculta cuando hay chat abierto
+    const menuOculto = (esMobile || esTabletChico) && vistaActiva === "chat";
+    // El contenido principal se oculta en mobile/tablet chico cuando no hay chat
+    const mainOculto = (esMobile || esTabletChico) && vistaActiva === "menu";
+    // El sidebar se oculta en mobile
+    const sidebarOculto = esMobile;
+
     return (
         <div className={`home-container ${darkMode ? 'dark-mode' : ''}`}>
-            <Sidebar />
 
-            {/* Menu recibe la función abrirChat que actualiza el contactoActivo */}
+            {!sidebarOculto && <Sidebar />}
+
             <Menu
-                onChatClick={abrirChat} 
+                onChatClick={abrirChat}
                 darkMode={darkMode}
                 onToggleDarkMode={onToggleDarkMode}
-                className={vistaActiva === "menu" ? "" : "menu-oculto"}
+                esOculto={menuOculto}
             />
 
-            <div className={`home-main-content ${vistaActiva === "chat" ? "" : "main-oculto"}`}>
+            <div className={`home-main-content ${mainOculto ? 'main-oculto' : ''}`}>
                 {chatAbierto && contactoActivo ? (
-                    /* IMPORTANTE: Pasamos contactoActivo a la prop 'chat' 
-                       para que coincida con el componente Chat que armamos.
-                    */
-                    <Chat 
-                        onVolver={volverAlMenu} 
-                        chat={contactoActivo} 
+                    <Chat
+                        onVolver={volverAlMenu}
+                        chat={contactoActivo}
+                        esTablet={esTabletGrande || esTabletChico}
                     />
                 ) : (
                     <DescargarApp />
                 )}
             </div>
+
         </div>
     );
 }

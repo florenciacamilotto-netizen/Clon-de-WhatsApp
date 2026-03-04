@@ -210,15 +210,29 @@ svg {
     to { transform: translateX(0); }
 }
 
-/* ── MOBILE (300px - 600px) ── */
+/* ── MOBILE (hasta 600px) ── */
 @media (max-width: 600px) {
+    .chat-header_subtitle{
+        display: none;
+    }
+
+    .chat-header h4 {
+        margin-right: 10px;
+    }
+
+    .btn-videocall span {
+        display: none;
+    }
 
     .home-container {
         flex-direction: column;
     }
 
-    .sidebar-container,
-    .chat-container {
+   .chat-messages{
+    gap: 10px;
+   }
+   
+    .sidebar-container {
         display: none;
     }
 
@@ -252,19 +266,17 @@ svg {
     }
 }
 
-/* ── TABLET CHICO (600px - 880px) ── solo Menu + Sidebar */
-@media (min-width: 600px) and (max-width: 880px) {
-
-    
+/* ── TABLET CHICO (600px - 700px) ── solo menu */
+@media (min-width: 600px) and (max-width: 700px) {
+    .chat-container{
+        display: none;
+    }
     .sidebar-container {
-        display: flex;
-        width: 54px;
-        flex-shrink: 0;
+        width: 100%;
     }
 
     .menu-container {
-        flex: 1;
-        min-width: 0;
+        width: 100%;
     }
 
     .home-main-content {
@@ -272,14 +284,49 @@ svg {
     }
 
     .btn-volver {
-        display: none;
+        display: flex;
+        align-items: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: inherit;
+        padding: 8px;
+        margin-right: 4px;
     }
-
 }
 
-/* ── TABLET GRANDE (880px - 1200px) ── todo visible */
-@media (min-width: 880px) and (max-width: 1200px) {
+/* ── TABLET MEDIANO (700px - 880px) ── solo chat */
+@media (min-width: 700px) and (max-width: 880px) {
+    .chat-container{
+        display: none;
+    }
+    .sidebar-container {
+        width: 100%;
+    }
 
+    .menu-container {
+        width: 100%;
+    }
+
+    .home-main-content {
+        width: 100%;
+        flex: 1;
+    }
+
+    .btn-volver {
+        display: flex;
+        align-items: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: inherit;
+        padding: 8px;
+        margin-right: 4px;
+    }
+}
+
+/* ── TABLET GRANDE (880px - 1200px) ── sidebar + menu + chat */
+@media (min-width: 880px) and (max-width: 1200px) {
     .sidebar-container {
         display: flex;
         width: 54px;
@@ -325,7 +372,6 @@ svg {
 
 /* ── DESKTOP (1200px+) ── */
 @media (min-width: 1200px) {
-
     .menu-oculto,
     .main-oculto {
         display: flex !important;
@@ -338,12 +384,24 @@ svg {
 
 /* ── PANTALLAS GRANDES (1600px+) ── */
 @media (min-width: 1600px) {
-
     .menu-container {
         min-width: 420px;
     }
 
     .home-main-content {
         flex: 1;
+    }
+}
+
+/* ── PERFIL ABIERTO en menos de 1200px ── */
+@media (max-width: 1200px) {
+    .chat-oculto {
+        display: none !important;
+    }
+
+    .perfil-abierto .profile-container {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
     }
 }

@@ -45,17 +45,17 @@ function Chat({ chat, onVolver }) {
             { id: 3, texto: "Uy, bajá algo más liviano entonces.", hora: "08:18", tipo: "received" }
         ],
         2: [
-            { id: 1, texto: "Dale, salgo en 5!", hora: "10:45", tipo: "sent" },
-            { id: 2, texto: "Avisame cuando estés por salir así te espero abajo.", hora: "10:47", tipo: "received" },
-            { id: 3, texto: "Apurate que hace frío jaja", hora: "10:49", tipo: "received" },
-            { id: 4, texto: "Ya casi llego", hora: "10:50", tipo: "received" },
-            { id: 5, texto: "Estoy en la puerta, te espero!", hora: "10:51", tipo: "received" }
+            { id: 1, texto: "Avisame cuando estés por salir así te espero abajo.", hora: "10:40", tipo: "received" },
+            { id: 2, texto: "Apurate que hace frío jaja", hora: "10:42", tipo: "received" },
+            { id: 3, texto: "¿Tardás mucho?", hora: "10:44", tipo: "received" },
+            { id: 4, texto: "Ya casi llego", hora: "10:46", tipo: "received" },
+            { id: 5, texto: "Estoy en la puerta, te espero!", hora: "10:48", tipo: "received" }
         ],
         3: [
             { id: 1, texto: "No sabés el frío que hace acá, traete una campera.", hora: "13:20", tipo: "received" },
             { id: 2, texto: "Menos mal que me avisaste!", hora: "13:25", tipo: "sent" },
-            { id: 3, texto: "En serio, está helado hoy", hora: "13:26", tipo: "received" },
-            { id: 4, texto: "Capaz llueve también, fijate el clima", hora: "13:27", tipo: "received" }
+            { id: 3, texto: "En serio, está helado hoy", hora: "13:28", tipo: "received" },
+            { id: 4, texto: "Capaz llueve también, fijate el clima", hora: "13:29", tipo: "received" }
         ],
         4: [
             { id: 1, texto: "Te mandé una foto de lo que compramos, ¿te gusta?", hora: "16:10", tipo: "received" },
@@ -98,13 +98,13 @@ function Chat({ chat, onVolver }) {
     };
 
     return (
-        <div style={{ display: 'flex', width: '100%', height: '100%' }}>
+        <div style={{ display: 'flex', width: '100%', height: '100%' }} className={mostrarPerfil ? 'perfil-abierto' : ''}>
 
             <div className="chat-container" style={{ flex: 1, minWidth: 0 }}>
                 <div className="chat-header">
                     <button className="btn-volver" onClick={onVolver}>
                         <svg viewBox="0 0 24 24" height="24" width="24" fill="none">
-                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor" />
                         </svg>
                     </button>
 
@@ -112,7 +112,9 @@ function Chat({ chat, onVolver }) {
                         className="chat-header_image"
                         onClick={togglePerfil}
                         style={{ cursor: 'pointer' }}
-                    ></div>
+                    >
+                        <img src={chat?.imagen} alt={chat?.nombre} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                    </div>
 
                     <div
                         className="chat-header_info"
@@ -120,7 +122,9 @@ function Chat({ chat, onVolver }) {
                         style={{ cursor: 'pointer' }}
                     >
                         <h4>{chat?.nombre || "Julieta Alarcón"}</h4>
-                        <span>haz click aquí para ver la información del contacto</span>
+                        <div className="chat-header_subtitle">
+                            <span>haz click aquí para ver la información del contacto</span>
+                        </div>
                     </div>
 
                     <button className="btn-videocall">

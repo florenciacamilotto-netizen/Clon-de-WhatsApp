@@ -5,44 +5,46 @@ function Menu({ onChatClick, darkMode, onToggleDarkMode, esOculto }) {
     const [menuAbierto, setMenuAbierto] = useState(false);
     const [filtroActivo, setFiltroActivo] = useState("todos");
 
-    const nombreChat = "UTN CEL - Programación Web";
-    const mostrarChat = busqueda === "" || nombreChat.toLowerCase().startsWith(busqueda.toLowerCase());
-
     const chats = [
         {
             id: 1,
             nombre: "Julián Alarcón",
             hora: "08:12",
             mensaje: "Che, ¿al final pudiste descargar el programa ese?",
-            noLeidos: 1
+            noLeidos: 1,
+            imagen: "/contacto-1.jpg"
         },
         {
             id: 2,
             nombre: "Paula Benítez",
             hora: "10:45",
             mensaje: "Avisame cuando estés por salir así te espero abajo.",
-            noLeidos: 5
+            noLeidos: 5,
+            imagen: "/contacto-2.png"
         },
         {
             id: 3,
             nombre: "Gonzalo Martínez",
             hora: "13:20",
             mensaje: "No sabés el frío que hace acá, traete una campera.",
-            noLeidos: 2
+            noLeidos: 2,
+            imagen: "/contacto-3.png"
         },
         {
             id: 4,
             nombre: "Victoria Rossi",
             hora: "16:10",
             mensaje: "Te mandé una foto de lo que compramos, ¿te gusta?",
-            noLeidos: 0
+            noLeidos: 0,
+            imagen: "/contacto-4.png"
         },
         {
             id: 5,
             nombre: "Matías Fernández",
             hora: "19:55",
             mensaje: "¡Feliz cumple loco! Espero que la pases de diez.",
-            noLeidos: 0
+            noLeidos: 0,
+            imagen: "/contacto-5.png"
         }
     ];
 
@@ -111,7 +113,9 @@ function Menu({ onChatClick, darkMode, onToggleDarkMode, esOculto }) {
                 <div className="chats-list">
                     {chatsFiltrados.map(chat => (
                         <div key={chat.id} className="chat-panel_menu" onClick={() => onChatClick(chat)}>
-                            <div className="chat-panel_image"></div>
+                            <div className="chat-panel_image">
+                                <img src={chat.imagen} alt={chat.nombre} />
+                            </div>
                             <div className="chat-panel_text">
                                 <div className="chat-panel_superior">
                                     <h3>{chat.nombre}</h3>
