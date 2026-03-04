@@ -4,9 +4,7 @@ const AddEmoji = ({ onEmojiSelect }) => {
 
     return (
         <div className="emoji-wrapper">
-            <button className="btn-emoji-inside" onClick={() => setShowPicker(!showPicker)}>
-                😊
-            </button>
+            <button className="btn-emoji-inside" onClick={() => setShowPicker(!showPicker)}></button>
             {showPicker && (
                 <EmojiPicker onEmojiClick={(emojiData) => {
                     onEmojiSelect(emojiData.emoji);

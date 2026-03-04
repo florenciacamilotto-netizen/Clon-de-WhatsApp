@@ -34,11 +34,8 @@ export default function Home({ darkMode, onToggleDarkMode }) {
         setContactoActivo(null);
     };
 
-    // En mobile y tablet chico, el menu se oculta cuando hay chat abierto
     const menuOculto = (esMobile || esTabletChico) && vistaActiva === "chat";
-    // El contenido principal se oculta en mobile/tablet chico cuando no hay chat
     const mainOculto = (esMobile || esTabletChico) && vistaActiva === "menu";
-    // El sidebar se oculta en mobile
     const sidebarOculto = esMobile;
 
     return (

@@ -8,8 +8,7 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        // Verifica que ambos campos tengan al menos un carácter
+
         if (email.length > 0 && password.length > 0) {
             navigate('/loading');
         } else {
@@ -25,15 +24,15 @@ function Login() {
             <div className="login-form">
                 <form onSubmit={handleSubmit}>
                     <div className="login-form_login">
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             placeholder="Nombre"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <input 
-                            type="password" 
-                            placeholder="Contraseña" 
+                        <input
+                            type="password"
+                            placeholder="Contraseña"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />

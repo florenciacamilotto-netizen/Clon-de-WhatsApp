@@ -134,7 +134,6 @@ svg {
     flex-shrink: 0;
 }
 
-/* Para que Chat o DescargarApp ocupen el 100% del espacio del contenedor principal */
 .chats-container,
 .descargar-app-container {
     width: 100%;
@@ -145,7 +144,6 @@ svg {
     margin-top: 3px;
 }
 
-/* Contenedor Base */
 .menu-container {
     background-color: white;
     color: #111b21;
@@ -153,7 +151,6 @@ svg {
     height: 100%;
 }
 
-/* Dropdown y Menú flotante */
 .dropdown-wrapper {
     position: relative;
     display: flex;
@@ -171,7 +168,6 @@ svg {
     z-index: 1000;
     margin-top: 5px;
     background-color: #fff;
-    /* Por defecto */
 }
 
 .dropdown-item {
@@ -181,25 +177,21 @@ svg {
     color: #3b4a54;
 }
 
-/* Este es el contenedor que agregamos en el Home */
 .chat-and-profile-wrapper {
     display: flex;
     overflow: hidden;
     width: 100%;
 }
 
-/* El chat debe ocupar todo el espacio si el perfil está cerrado, 
-   o achicarse si el perfil aparece */
 .chat-container {
-    flex: 1; /* Esto hace que el chat sea flexible */
+    flex: 1;
     transition: all 0.3s ease;
 }
 
-/* El perfil debe tener un ancho fijo */
 .profile-container {
-    width: 30%; /* O los píxeles que prefieras, ej: 400px */
+    width: 30%;
     min-width: 350px;
-    border-left: 1px solid var(--border-color); /* Para separar del chat */
+    border-left: 1px solid var(--border-color);
     background-color: var(--bg-profile);
     height: 100%;
     animation: slideIn 0.3s ease-out;
@@ -210,7 +202,8 @@ svg {
     to { transform: translateX(0); }
 }
 
-/* ── MOBILE (hasta 600px) ── */
+/* Mobile */
+
 @media (max-width: 600px) {
     .chat-header_subtitle{
         display: none;
@@ -231,7 +224,7 @@ svg {
    .chat-messages{
     gap: 10px;
    }
-   
+
     .sidebar-container {
         display: none;
     }
@@ -266,7 +259,8 @@ svg {
     }
 }
 
-/* ── TABLET CHICO (600px - 700px) ── solo menu */
+/* Tablet */
+
 @media (min-width: 600px) and (max-width: 700px) {
     .chat-container{
         display: none;
@@ -295,7 +289,8 @@ svg {
     }
 }
 
-/* ── TABLET MEDIANO (700px - 880px) ── solo chat */
+/* Tablet */
+
 @media (min-width: 700px) and (max-width: 880px) {
     .chat-container{
         display: none;
@@ -325,7 +320,8 @@ svg {
     }
 }
 
-/* ── TABLET GRANDE (880px - 1200px) ── sidebar + menu + chat */
+/* Tablet */
+
 @media (min-width: 880px) and (max-width: 1200px) {
     .sidebar-container {
         display: flex;
@@ -370,7 +366,8 @@ svg {
     }
 }
 
-/* ── DESKTOP (1200px+) ── */
+/* Monitor */
+
 @media (min-width: 1200px) {
     .menu-oculto,
     .main-oculto {
@@ -382,7 +379,8 @@ svg {
     }
 }
 
-/* ── PANTALLAS GRANDES (1600px+) ── */
+/* Monitor */
+
 @media (min-width: 1600px) {
     .menu-container {
         min-width: 420px;
@@ -393,7 +391,8 @@ svg {
     }
 }
 
-/* ── PERFIL ABIERTO en menos de 1200px ── */
+/* Monitor */
+
 @media (max-width: 1200px) {
     .chat-oculto {
         display: none !important;

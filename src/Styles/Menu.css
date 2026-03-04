@@ -251,8 +251,8 @@
 }
 
 .dark-mode .chat-panel_superior h5{
+    /* color: var(--mid-green); */
     font-weight: 400;
-    /*color: var(--mid-green);*/
 }
 
 .chat-panel_inferior {
@@ -319,7 +319,7 @@
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
-    height: 40px;  /* el tamaño que ya tenés */
+    height: 40px;
     width: 40px;
 }
 
